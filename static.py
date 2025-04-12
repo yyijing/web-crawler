@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 import requests
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 from bs4 import BeautifulSoup
 import csv
 import time
@@ -17,7 +19,7 @@ def main():
     for page in range(1, total_pages + 1):
         url = base_url.format(page)
         try:
-            response = requests.get(url, headers=headers)
+            response = requests.get(url, headers=headers, verify=False)
             response.raise_for_status()  # 檢查 HTTP 錯誤
             soup = BeautifulSoup(response.text, "html.parser")
             
